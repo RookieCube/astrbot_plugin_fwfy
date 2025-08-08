@@ -39,6 +39,6 @@ class FwfyTranslatorListener(Star):
         except APIError as error:
             yield event.plain_result("翻译服务出现了API问题，请稍后再试~")
             logger.error(f"翻译插件API出错: {error}", exc_info=error)
-        except TimeoutError as error:
+        except asyncio.TimeoutError as error:
             yield event.plain_result("翻译服务出现了超时问题，请稍后再试~")
             logger.error(f"翻译插件超时: {error}", exc_info=error)
