@@ -1,4 +1,3 @@
-import json
 from astrbot.api.event import filter, AstrMessageEvent
 from astrbot.api.star import Context, Star, register
 
@@ -7,7 +6,7 @@ class FwfyTranslatorListener(Star):
     def __init__(self, context: Context):
         super().__init__(context)
 
-    @filter.event_message_type(filter.EventMessageType.ALL)
+    @filter.on_startswith("fwfy")
     async def translate_all_messages(self, event: AstrMessageEvent):
         """
         监听所有消息，进行逐词直译搞笑翻译。
@@ -16,10 +15,6 @@ class FwfyTranslatorListener(Star):
             message_str = event.message_str.strip()
             # 分割命令和内容
             parts = message_str.split(maxsplit=1)
-
-            if not parts or parts[0] != "fwfy":
-                return  # 非触发命令直接返回
-
             if len(parts) < 2:
                 yield event.plain_result("🐾 请在后边输入要翻译的内容~")
                 return
@@ -41,4 +36,5 @@ class FwfyTranslatorListener(Star):
                 yield event.plain_result("翻译出错：LLM返回了非助手角色的回复。")
 
         except Exception as e:
-            yield event.plain_result(f"翻译出错：{str(e)}")
+            yield event.plain_result("翻译服务出现了一点小问题，请稍后再试~")
+            logger.error(f"翻译插件出错: {e}", exc_info=e)
