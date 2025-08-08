@@ -7,14 +7,14 @@ class FwfyTranslatorListener(Star):
     def __init__(self, context: Context):
         super().__init__(context)
 
-    @filter.event_message_type(EventMessageType.ALL)
+    @filter.event_message_type("ALL")  # Corrected: Use string literal "ALL"
     async def translate_all_messages(self, event: AstrMessageEvent):
         """
         监听所有消息，进行逐词直译搞笑翻译。
         """
         try:
             content = event.message_str
-            if content.startswith("/fwfy"): #忽略/fwfy指令本身
+            if content.startswith("/fwfy"):  # Ignore /fwfy command itself
                 return
 
             llm_response = await self.context.get_using_provider().text_chat(
