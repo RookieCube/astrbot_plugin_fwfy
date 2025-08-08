@@ -1,5 +1,5 @@
 name: 飞舞人机翻译 # 这是你的插件的唯一识别名。
 desc: 这是一个适用于 AstrBot™ 的 人机翻译 插件，能让你的Bot翻译出人机一般的翻译！ # 插件简短描述
-version: v1.0.2 # 插件版本号。格式：v1.1.1 或者 v1.1
+version: v1.0.4 # 插件版本号。格式：v1.1.1 或者 v1.1
 author: RookieCube # 作者
 repo: https://github.com/RookieCube/astrbot_plugin_fwfy # 插件的仓库地址
