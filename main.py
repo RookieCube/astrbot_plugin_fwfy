@@ -30,7 +30,7 @@ class FwfyTranslatorListener(Star):
                 contexts=[],
                 image_urls=[],
                 func_tool=None,
-                system_prompt="你是一个翻译助手，请将输入文本进行人机搞笑翻译，并使翻译结果尽可能的'狗屁不通'（相当于逐词翻译然后连起来成一句话，不要有空格）。"
+                system_prompt="你是一个翻译助手，请将输入文本进行人机搞笑翻译，并使翻译结果尽可能的'狗屁不通',使用一词的别的意思而不是该语境的正确意思（相当于逐词翻译然后连起来成一句话，不要有空格）。"
             )
 
             if llm_response.role == "assistant":
