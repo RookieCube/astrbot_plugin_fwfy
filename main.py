@@ -1,34 +1,35 @@
+import json
 from astrbot.api.event import filter, AstrMessageEvent
 from astrbot.api.star import Context, Star, register
 
-@register("fwfy_translator", "Cici", "一个逐词直译的搞笑翻译插件", "1.0.0")
-class FwfyTranslator(Star):
+@register("fwfy_translator_listener", "Cici", "一个监听所有消息并进行搞笑翻译的插件", "1.0.0")
+class FwfyTranslatorListener(Star):
     def __init__(self, context: Context):
         super().__init__(context)
 
-    @filter.command("fwfy")
-    async def translate(self, event: AstrMessageEvent, content: str):
+    @filter.event_message_type(EventMessageType.ALL)
+    async def translate_all_messages(self, event: AstrMessageEvent):
         """
-        逐词直译翻译，输出搞笑翻译结果。
+        监听所有消息，进行逐词直译搞笑翻译。
         """
         try:
-            words = content.split()
-            translated_words = []
-            for word in words:
-                llm_response = await self.context.get_using_provider().text_chat(
-                    prompt=f"请直译单词：{word}",
-                    contexts=[],
-                    image_urls=[],
-                    func_tool=None,
-                    system_prompt="你是一个翻译助手，请只返回单词的直译。"
-                )
-                if llm_response.role == "assistant":
-                    translated_words.append(llm_response.completion_text.strip())
-                else:
-                    translated_words.append(f"无法翻译：{word}")
+            content = event.message_str
+            if content.startswith("/fwfy"): #忽略/fwfy指令本身
+                return
 
-            result = " ".join(translated_words)
-            yield event.plain_result(result)
+            llm_response = await self.context.get_using_provider().text_chat(
+                prompt=f"请用狗屁不通的逐词直译方式翻译：{content}",
+                contexts=[],
+                image_urls=[],
+                func_tool=None,
+                system_prompt="你是一个翻译助手，请将输入文本进行逐词直译，并使翻译结果尽可能的'狗屁不通'且搞笑。"
+            )
+
+            if llm_response.role == "assistant":
+                result = llm_response.completion_text.strip()
+                yield event.plain_result(result)
+            else:
+                yield event.plain_result(f"翻译出错：LLM返回了非助手角色的回复。")
 
         except Exception as e:
             yield event.plain_result(f"翻译出错: {e}")
