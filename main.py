@@ -29,5 +29,5 @@ class FwfyTranslatorListener(Star):
                 else:
                     yield event.plain_result(f"翻译出错：LLM返回了非助手角色的回复。")
     
-            except Exception as e:
-                yield event.plain_result(f"翻译出错: {e}")
+        except Exception as e:
+            yield event.plain_result(f"翻译出错: {e}")
