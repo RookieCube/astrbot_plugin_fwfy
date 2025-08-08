@@ -1,24 +1,19 @@
 import json
 from astrbot.api.event import filter, AstrMessageEvent
 from astrbot.api.star import Context, Star, register
+from astrbot.api import logger
 
-@register("fwfy_translator_listener", "Cici", "一个监听所有消息并进行搞笑翻译的插件", "1.0.0")
-class FwfyTranslatorListener(Star):
+@register("fwfy_translator", "Cici", "飞舞人机翻译插件", "1.0.0")
+class FwfyTranslator(Star):
     def __init__(self, context: Context):
         super().__init__(context)
 
-    @filter.event_message_type("ALL")  # Corrected: Use string literal "ALL"
-    async def translate_all_messages(self, event: AstrMessageEvent):
-        """
-        监听所有消息，进行逐词直译搞笑翻译。
-        """
+    @filter.command("fwfy") # Only respond to /fwfy command
+    async def translate(self, event: AstrMessageEvent, content: str):
+        """飞舞人机翻译"""
         try:
-            content = event.message_str
-            if content.startswith("/fwfy"):  # Ignore /fwfy command itself
-                return
-
             llm_response = await self.context.get_using_provider().text_chat(
-                prompt=f"请用狗屁不通的逐词直译方式翻译：{content}",
+                prompt=f"请用'狗屁不通'的逐词直译方式翻译：{content}",
                 contexts=[],
                 image_urls=[],
                 func_tool=None,
@@ -29,7 +24,8 @@ class FwfyTranslatorListener(Star):
                 result = llm_response.completion_text.strip()
                 yield event.plain_result(result)
             else:
-                yield event.plain_result(f"翻译出错：LLM返回了非助手角色的回复。")
+                yield event.plain_result("翻译出错：LLM返回了非助手角色的回复。")
 
         except Exception as e:
+            logger.error(f"翻译出错: {e}") # Use AstrBot's logger
             yield event.plain_result(f"翻译出错: {e}")
