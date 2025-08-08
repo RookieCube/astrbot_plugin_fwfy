@@ -35,6 +35,9 @@ class FwfyTranslatorListener(Star):
             else:
                 yield event.plain_result("翻译出错：LLM返回了非助手角色的回复。")
 
-        except Exception as e:
+        except APIError as Error:
             yield event.plain_result("翻译服务出现了一点小问题，请稍后再试~")
-            logger.error(f"翻译插件出错: {e}", exc_info=e)
+            logger.error(f"翻译插件API出错: {Error}", exc_info=Error)
+        except TimeoutError as Error:
+            yield event.plain_result("翻译服务出现了一点小问题，请稍后再试~")
+            logger.error(f"翻译插件超时: {Error}", exc_info=Error)
