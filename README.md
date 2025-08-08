@@ -1,9 +1,3 @@
-# helloworld
+# 适用于 AstrBot™ 的 人机翻译 插件
+安装后使用 /fwfy 内容 来让你的AI生成人机一般的翻译！
 
-AstrBot 插件模板
-
-A template plugin for AstrBot plugin feature
-
-# 支持
-
-[帮助文档](https://astrbot.app)
