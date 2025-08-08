@@ -1,3 +1,4 @@
+from astrbot.api.error import APIError
 from astrbot.api.event import filter, AstrMessageEvent
 from astrbot.api.star import Context, Star, register
 from astrbot.api import logger
@@ -35,9 +36,9 @@ class FwfyTranslatorListener(Star):
             else:
                 yield event.plain_result("翻译出错：LLM返回了非助手角色的回复。")
 
-        except APIError as Error:
-            yield event.plain_result("翻译服务出现了一点小问题，请稍后再试~")
-            logger.error(f"翻译插件API出错: {Error}", exc_info=Error)
-        except TimeoutError as Error:
-            yield event.plain_result("翻译服务出现了一点小问题，请稍后再试~")
-            logger.error(f"翻译插件超时: {Error}", exc_info=Error)
+        except APIError as error:
+            yield event.plain_result("翻译服务出现了API问题，请稍后再试~")
+            logger.error(f"翻译插件API出错: {error}", exc_info=error)
+        except TimeoutError as error:
+            yield event.plain_result("翻译服务出现了超时问题，请稍后再试~")
+            logger.error(f"翻译插件超时: {error}", exc_info=error)
