@@ -22,7 +22,7 @@ class FwfyTranslatorListener(Star):
                 contexts=[],
                 image_urls=[],
                 func_tool=None,
-                system_prompt="你是一个翻译助手，请将输入文本进行逐词直译，并使翻译结果尽可能的'狗屁不通'且搞笑。"
+                system_prompt="你是一个翻译助手，请将输入文本进行逐词直译，并使翻译结果尽可能的'狗屁不通'（相当于逐词翻译然后连起来）。请忽略开头的/fwfy。"
             )
 
             if llm_response.role == "assistant":
