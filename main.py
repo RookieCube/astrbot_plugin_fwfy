@@ -1,6 +1,6 @@
 from astrbot.api.event import filter, AstrMessageEvent
 from astrbot.api.star import Context, Star, register
-
+from astrbot.api import logger
 @register("fwfy_translator_listener", "RookieCube", "一个监听所有消息并进行搞笑翻译的插件", "1.0.0")
 class FwfyTranslatorListener(Star):
     def __init__(self, context: Context):
