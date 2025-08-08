@@ -34,7 +34,7 @@ class FwfyTranslatorListener(Star):
 
                 if llm_response.role == "assistant":
                     result = llm_response.completion_text.strip()
-                    yield event.plain_result(f"{result}")
+                    yield event.plain_result(f"翻译(人机)的内容：{result}")
                 else:
                     yield event.plain_result("翻译出错：LLM返回了非助手角色的回复。")
             elif parts[0] == "normal_translate":
@@ -54,7 +54,7 @@ class FwfyTranslatorListener(Star):
 
                 if llm_response.role == "assistant":
                     result = llm_response.completion_text.strip()
-                    yield event.plain_result(f"{result}")
+                    yield event.plain_result(f"翻译(正常)的内容：{result}")
                 else:
                     yield event.plain_result("翻译出错：LLM返回了非助手角色的回复。")
         except Exception as e:
