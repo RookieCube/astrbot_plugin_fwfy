@@ -15,8 +15,9 @@ class FwfyTranslatorListener(Star):
             message_str = event.message_str.strip()
             # 分割命令和内容
             parts = message_str.split(maxsplit=1)
-
-            if not parts or parts[0] == "robot_translate":
+            if not parts or parts[0] != "robot_translate" or != "normal_translate":
+                return
+            elif not parts or parts[0] == "robot_translate":
                 if len(parts) < 2:
                     yield event.plain_result("请在命令后输入要翻译的内容")
                     return
