@@ -26,11 +26,11 @@ class FwfyTranslatorListener(Star):
             text_to_translate = parts[1]
 
             llm_response = await self.context.get_using_provider().text_chat(
-                prompt=f"请用狗屁不通的逐词直译方式翻译：{text_to_translate}",
+                prompt=f"请用狗屁不通的逐词直译方式翻译：{text_to_translate}，请将输入文本进行人机的搞笑翻译，请使用词的别的意思而不是该语境的正确意思（相当于逐词翻译然后连起来成一句话，且不使用该语境下的正确意思，单词中间不要有空格，保留可能有的emoji）请不要使用音译。",
                 contexts=[],
                 image_urls=[],
                 func_tool=None,
-                system_prompt="你是一个人机翻译助手，请将输入文本进行人机的搞笑翻译，请使用词的别的意思而不是该语境的正确意思（相当于逐词翻译然后连起来成一句话，且不使用该语境下的正确意思，单词中间不要有空格，保留可能有的emoji）。"
+                system_prompt="你是一个人机翻译助手"
             )
 
             if llm_response.role == "assistant":
