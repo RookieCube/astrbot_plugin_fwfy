@@ -13,23 +13,23 @@ class FwfyTranslatorListener(Star):
         监听所有消息，进行逐词直译搞笑翻译。
         """
         try:
-            content = event.message_str
+            message_str = event.message_str.strip()
             if content.startswith("/fwfy"): #忽略/fwfy指令本身
                 return
-
-            llm_response = await self.context.get_using_provider().text_chat(
-                prompt=f"请用狗屁不通的逐词直译方式翻译：{content}",
-                contexts=[],
-                image_urls=[],
-                func_tool=None,
-                system_prompt="你是一个翻译助手，请将输入文本进行逐词直译，并使翻译结果尽可能的'狗屁不通'（相当于逐词翻译然后连起来）。请忽略开头的/fwfy。"
-            )
-
-            if llm_response.role == "assistant":
-                result = llm_response.completion_text.strip()
-                yield event.plain_result(result)
-            else:
-                yield event.plain_result(f"翻译出错：LLM返回了非助手角色的回复。")
-
-        except Exception as e:
-            yield event.plain_result(f"翻译出错: {e}")
+            if message_str == "走火开":
+                llm_response = await self.context.get_using_provider().text_chat(
+                    prompt=f"请用狗屁不通的逐词直译方式翻译：{content}",
+                    contexts=[],
+                    image_urls=[],
+                    func_tool=None,
+                    system_prompt="你是一个翻译助手，请将输入文本进行逐词直译，并使翻译结果尽可能的'狗屁不通'（相当于逐词翻译然后连起来）。请忽略开头的/fwfy。"
+                )
+    
+                if llm_response.role == "assistant":
+                    result = llm_response.completion_text.strip()
+                    yield event.plain_result(result)
+                else:
+                    yield event.plain_result(f"翻译出错：LLM返回了非助手角色的回复。")
+    
+            except Exception as e:
+                yield event.plain_result(f"翻译出错: {e}")
