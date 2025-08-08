@@ -14,9 +14,7 @@ class FwfyTranslatorListener(Star):
         """
         try:
             message_str = event.message_str.strip()
-            if content.startswith("/fwfy"): #忽略/fwfy指令本身
-                return
-            if message_str == "走火开":
+            if message_str == "/fwfy":
                 llm_response = await self.context.get_using_provider().text_chat(
                     prompt=f"请用狗屁不通的逐词直译方式翻译：{content}",
                     contexts=[],
