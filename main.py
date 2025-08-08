@@ -25,7 +25,7 @@ class FwfyTranslatorListener(Star):
                 text_to_translate = parts[1]
 
                 llm_response = await self.context.get_using_provider().text_chat(
-                    prompt=f"请用狗屁不通的逐词直译方式翻译([]内是需翻译内容)：[{text_to_translate}]，在非指定情况下使用中文输出。请将输入文本进行人机的古代机翻翻译，请使用词的别的意思而不是该语境的正确意思（相当于逐词翻译（但是不要拆分一个单词，如Nothing拆成No thing然后翻译无有物）然后连起来成一句话，且不使用该语境下的正确意思，单词中间不要有空格，保留可能有的emoji）请不要使用音译。仅输出翻译内容，不要解析。",
+                    prompt=f"请用狗屁不通的逐词直译方式翻译([]内是需翻译内容)：[{text_to_translate}]，请将输入文本进行人机一样的很久以前的机翻翻译，请使用词的别的意思而不是该语境的正确意思（相当于逐词翻译（但是不要拆分一个单词，如Nothing拆成No thing然后翻译无有物）然后连起来成一句话，且不使用该语境下的正确意思，单词中间不要有空格，保留可能有的emoji）请不要使用音译。仅输出翻译内容，不要解析。",
                     contexts=[],
                     image_urls=[],
                     func_tool=None,
