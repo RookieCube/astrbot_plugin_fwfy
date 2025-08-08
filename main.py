@@ -25,7 +25,7 @@ class FwfyTranslatorListener(Star):
                 text_to_translate = parts[1]
 
                 llm_response = await self.context.get_using_provider().text_chat(
-                    prompt=f"请用狗屁不通的逐词直译方式翻译：{text_to_translate}，请将输入文本进行人机的搞笑翻译，请使用词的别的意思而不是该语境的正确意思（相当于逐词翻译然后连起来成一句话，且不使用该语境下的正确意思，单词中间不要有空格，保留可能有的emoji）请不要使用音译。",
+                    prompt=f"请用狗屁不通的逐词直译方式翻译([]内是需翻译内容)：[{text_to_translate}]，在非指定情况下使用中文输出。请将输入文本进行人机的古代机翻翻译，请使用词的别的意思而不是该语境的正确意思（相当于逐词翻译然后连起来成一句话，且不使用该语境下的正确意思，单词中间不要有空格，保留可能有的emoji）请不要使用音译。仅输出翻译内容，不要解析。",
                     contexts=[],
                     image_urls=[],
                     func_tool=None,
@@ -34,7 +34,7 @@ class FwfyTranslatorListener(Star):
 
                 if llm_response.role == "assistant":
                     result = llm_response.completion_text.strip()
-                    yield event.plain_result(f"翻译(人机)的内容：{result}")
+                    yield event.plain_result(f"翻译(人机)的内容：\n{result}")
                 else:
                     yield event.plain_result("翻译出错：LLM返回了非助手角色的回复。")
             elif parts[0] == "normal_translate":
@@ -45,7 +45,7 @@ class FwfyTranslatorListener(Star):
                 text_to_translate = parts[1]
 
                 llm_response = await self.context.get_using_provider().text_chat(
-                    prompt=f"请翻译：{text_to_translate}，请使用正确，可信度高，达到原文意思，标准的翻译方法。部分情况下可意译。单词中间不要有空格，保留可能有的emoji。请不要使用音译。",
+                    prompt=f"请翻译([]内是需翻译内容)：[{text_to_translate}]，请使用正确，可信度高，达到原文意思，标准的翻译方法。部分情况下可意译。单词中间不要有空格，保留可能有的emoji。请不要使用音译。仅输出翻译内容，不要解析。",
                     contexts=[],
                     image_urls=[],
                     func_tool=None,
