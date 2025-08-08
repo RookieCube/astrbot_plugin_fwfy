@@ -8,7 +8,7 @@ class FwfyTranslatorListener(Star):
     def __init__(self, context: Context):
         super().__init__(context)
 
-        @filter.on_startswith("fwfy")
+    @filter.on_startswith("fwfy")
     async def translate_all_messages(self, event: AstrMessageEvent):
         """
         监听所有消息，进行逐词直译搞笑翻译。
