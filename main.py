@@ -11,7 +11,7 @@ class FwfyTranslatorListener(Star):
     @filter.on_startswith("fwfy")
     async def translate_all_messages(self, event: AstrMessageEvent):
         """
-        监听所有消息，进行逐词直译搞笑翻译。
+        监听所有以 'fwfy' 开头的消息，进行逐词直译搞笑翻译。
         """
         message_str = event.message_str.strip()
         parts = message_str.split(maxsplit=1)
