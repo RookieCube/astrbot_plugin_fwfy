@@ -1,7 +1,7 @@
 from astrbot.api.event import filter, AstrMessageEvent
 from astrbot.api.star import Context, Star, register
 
-@register("astrbot_plugin_robot_translate", "RookieCube", "一个监听所有消息并进行搞笑翻译的插件", "1.0.1")
+@register("astrbot_plugin_robot_translate", "RookieCube", "一个监听所有消息并进行搞笑翻译的插件", "1.0.2")
 class FwfyTranslatorListener(Star):
     def __init__(self, context: Context):
         super().__init__(context)
@@ -32,7 +32,7 @@ class FwfyTranslatorListener(Star):
                 target_lang_text = "中文" if target_lang == "chi" else "英文"
                 
                 llm_response = await self.context.get_using_provider().text_chat(
-                    prompt=f"请将以下内容翻译成{target_lang_text}，使用机翻方式([]内是需翻译内容)：[{text_to_translate}]，请将输入文本进行人机一样的机翻翻译，请使用词的别的意思而不是该语境的正确意思（相当于逐词翻然后连起来成一句话，且不使用该语境下的正确意思，输出{target_lang_text}结果时中间不要有空格，保留可能有的emoji）请不要使用音译。仅输出翻译内容，不要解析翻译内容。",
+                    prompt=f"请将以下内容翻译成{target_lang_text}，使用机翻方式([]内是需翻译内容)：[{text_to_translate}]，请将输入文本进行人机一样的机翻翻译，请使用词的别的意思而不是该语境的正确意思（相当于逐词翻然后连起来成一句话，且不使用该语境下的正确意思，保留可能有的emoji）请不要使用音译。仅输出翻译内容，不要解析翻译内容。",
                     contexts=[],
                     image_urls=[],
                     func_tool=None,
@@ -59,7 +59,7 @@ class FwfyTranslatorListener(Star):
                 target_lang_text = "中文" if target_lang == "chi" else "英文"
 
                 llm_response = await self.context.get_using_provider().text_chat(
-                    prompt=f"请将以下内容翻译成{target_lang_text}([]内是需翻译内容)：[{text_to_translate}]，请使用正确，可信度高，达到原文意思，标准的翻译方法。部分情况下可意译。输出{target_lang_text}时中间不要有空格，保留可能有的emoji。请不要使用音译。仅输出翻译内容。",
+                    prompt=f"请将以下内容翻译成{target_lang_text}([]内是需翻译内容)：[{text_to_translate}]，请使用正确，可信度高，达到原文意思，标准的翻译方法。部分情况下可意译。保留可能有的emoji。请不要使用音译。仅输出翻译内容。",
                     contexts=[],
                     image_urls=[],
                     func_tool=None,
