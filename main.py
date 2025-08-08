@@ -7,7 +7,7 @@ class FwfyTranslatorListener(Star):
         super().__init__(context)
 
     @filter.event_message_type(filter.EventMessageType.ALL)
-    async def translate_all_messages(self, event: AstrMessageEvent):
+    async def translate_all_messages(self, event: AstrMessageEvent, *args):
         """
         监听所有消息，进行逐词直译搞笑翻译。
         """
